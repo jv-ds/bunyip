@@ -2,6 +2,9 @@ def sma_naive(prices: list, n: int):
     #prices = list of prices chronologically ordered
     #n = number of days to go back (window length)
 
+    if n <= 0:
+        raise ValueError("Window must be larger than 0")
+
     moving_avg = []
 
     for i in range(len(prices)):
