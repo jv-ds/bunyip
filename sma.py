@@ -18,9 +18,36 @@ def sma_naive(prices: list, n: int):
 
     return moving_avg
 
+def sma_faster(prices: list, n: int):
+    moving_avg = []
 
-dummy = [1,2,3]
-days_interested = 0
+    #max len of window has to be n
+    ongoing_sum = 0
+    # print(temp_window)
+    # print(len(temp_window))
+
+    for i in range(n):
+        ongoing_sum += prices[i]
+
+    for i in range(len(prices)):
+        if i < n-1:
+            moving_avg.append(None)
+        elif i == n-1:
+            moving_avg.append((ongoing_sum/n))
+        elif i > n-1:
+            ongoing_sum -= prices[i-n]
+
+            ongoing_sum += prices[i]
+
+            moving_avg.append((ongoing_sum/n))
+    
+    return moving_avg
+
+        
 
 
-print(f"The simple moving average is: {sma_naive(dummy,days_interested)}")
+dummy = [1,2,3,4,5,6,7,8,9,10]
+days_interested = 3
+
+
+print(f"The simple moving average is: {sma_faster(dummy,days_interested)}")
