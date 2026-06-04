@@ -46,6 +46,8 @@ def check(name, prices, n, expected):
 
     status = "PASS" if (ok_naive and ok_fast and ok_agree) else "FAIL"
     print(f"[{status}] {name}")
+    if status == "PASS":
+        print(f"    output:   {result_fast}")
     if status == "FAIL":
         print(f"    input:    prices={prices}, n={n}")
         print(f"    expected: {expected}")
