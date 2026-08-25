@@ -42,27 +42,31 @@ def get_underlying_stock_list(start, end):
         close_value = p[1]
 
         stock_list[f"{date_value}"] = close_value       #each idx in dict contains date: close value at that date
+        
+    close_values = list(stock_list.values())
+    date_values = list(stock_list.keys())
 
-    print(stock_list)     
+
+    return close_values, date_values, raw_vals    
 
     
 
 
 def get_5d_sma_list(start, end):
 
-    raw_vals = get_ivv(start, end)
+    close_values, date_values, raw_vals = get_underlying_stock_list(start, end)
 
-    return sma_faster(list(raw_vals.values()),5)
+    return sma_faster(close_values,5)
 
 
 def get_30d_sma_list(start, end):
 
-    raw_vals = get_ivv(start, end)
+    close_values, date_values, raw_vals = get_underlying_stock_list(start, end)
 
-    return sma_faster(list(raw_vals.values()),30)
+    return sma_faster(close_values,30)
 
 
-start_date = "2026-01-01"
-end_date = "2026-08-03"
+# start_date = "2026-01-01"
+# end_date = "2026-08-03"
 
-get_underlying_stock_list(start_date, end_date)
+# print(get_5d_sma_list(start_date, end_date))
