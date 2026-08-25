@@ -24,12 +24,16 @@ def get_ivv(start, end):
     return(data)
 
 #get_ivv()
-full_list = get_ivv("2026-01-01","2026-08-03")
+twenty_six_list = get_ivv("2026-01-01","2026-08-03")
 #thirty_day = sma_faster(get_ivv(),30)
-#five_day = sma_faster(get_ivv("2026-01-01","2026-08-03"),5)
+five_day_vals = sma_faster(list(twenty_six_list.values()),5)
+thirty_day_vals = sma_faster(list(twenty_six_list.values()),30)
 
 
-print(full_list)
+#print(five_day)
 
-print(get_ivv("2026-01-01","2026-08-03").keys())
-print(get_ivv("2026-01-01","2026-08-03").values())
+#print(full_list)
+print(five_day_vals)
+print(thirty_day_vals)
+
+
