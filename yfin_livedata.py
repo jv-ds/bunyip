@@ -1,9 +1,7 @@
 import yfinance as yf
 import json
 
-from sma import sma_naive, sma_faster
-
-import plotly.express as px
+from sma import sma_faster
 
 def get_ivv(start, end):
     stock = yf.Ticker("IVV.AX")
@@ -20,20 +18,51 @@ def get_ivv(start, end):
         data[idx] = val
 
     # .index for date, .values for price
+
+    #.items retrieves index values
+    #.values retrieves value values
     
     return(data)
 
-#get_ivv()
-twenty_six_list = get_ivv("2026-01-01","2026-08-03")
-#thirty_day = sma_faster(get_ivv(),30)
-five_day_vals = sma_faster(list(twenty_six_list.values()),5)
-thirty_day_vals = sma_faster(list(twenty_six_list.values()),30)
+
+def get_underlying_stock_list(start, end):
+
+    stock_list = {}
+
+    raw_vals = get_ivv(start, end)
+
+    point_of_interest = list(raw_vals.items())
+    #Each item is tuple: (date + time, price value)
+
+    for p in point_of_interest:
+
+        timestamp_item = p[0]
+        date_value = timestamp_item.date()
+
+        close_value = p[1]
+
+        stock_list[f"{date_value}"] = close_value       #each idx in dict contains date: close value at that date
+
+    print(stock_list)     
+
+    
 
 
-#print(five_day)
+def get_5d_sma_list(start, end):
 
-#print(full_list)
-print(five_day_vals)
-print(thirty_day_vals)
+    raw_vals = get_ivv(start, end)
+
+    return sma_faster(list(raw_vals.values()),5)
 
 
+def get_30d_sma_list(start, end):
+
+    raw_vals = get_ivv(start, end)
+
+    return sma_faster(list(raw_vals.values()),30)
+
+
+start_date = "2026-01-01"
+end_date = "2026-08-03"
+
+get_underlying_stock_list(start_date, end_date)
