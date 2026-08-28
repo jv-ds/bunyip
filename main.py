@@ -2,10 +2,15 @@ from sma_strategy import compare_two_sma
 from datetime import datetime
 
 def gui():
+    stock = stock_choice()
     start, end = date_request()
-    strategy_choice(start, end)
+    strategy_choice(stock, start, end)
 
-def strategy_choice(start_date, end_date):
+def stock_choice():
+
+    return str(input("Input the Yahoo Finance Ticker for the stock you wish to analyse: "))
+
+def strategy_choice(stock, start_date, end_date):
     strat_choice = int(input("Which strategy would you like to backtest?" \
               "\n\nSelect the strategy by typing in the number and pressing Enter\n"
     "\n1. Simple Moving Average\n   \
@@ -28,7 +33,7 @@ def strategy_choice(start_date, end_date):
 
         print("\n")
 
-        compare_two_sma(start_date, end_date, a, b)
+        compare_two_sma(stock, start_date, end_date, a, b)
 
 
 def date_request():

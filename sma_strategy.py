@@ -1,8 +1,15 @@
-from yfin_livedata import get_underlying_stock_list, get_sma_list
+from yfin_livedata import get_underlying_stock_list, get_stock_data
+from sma_algo import sma_faster
 
 # Strategy: buy when smaller date parameter sma crosses larger sma upwards, sell when smaller date parameter sma crosses larger one downwards
 
-def compare_two_sma(start,end, a: int, b: int):
+def get_sma_list(stock, start, end, lookback_period: int):
+
+    close_values, date_values, raw_vals = get_underlying_stock_list(stock, start, end)
+
+    return sma_faster(close_values, lookback_period)
+
+def compare_two_sma(stock, start,end, a: int, b: int):
 
     #setting variables for loop & terminal messages
     if a < b:
@@ -12,10 +19,10 @@ def compare_two_sma(start,end, a: int, b: int):
     if a == b:
          raise ValueError
 
-    indicator_1 = get_sma_list(start, end, a)
-    indicator_2 = get_sma_list(start, end, b)
+    indicator_1 = get_sma_list(stock, start, end, a)
+    indicator_2 = get_sma_list(stock, start, end, b)
     
-    close_values, date, _ = get_underlying_stock_list(start, end)
+    close_values, date, _ = get_underlying_stock_list(stock, start, end)
 
     trading_balance = 0
     indexed_balance = close_values[-1] - close_values[0]

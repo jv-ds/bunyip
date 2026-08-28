@@ -1,10 +1,10 @@
 import yfinance as yf
 import json
 
-from sma import sma_faster
+from sma_algo import sma_faster
 
-def get_ivv(start, end):
-    stock = yf.Ticker("IVV.AX")
+def get_stock_data(stock, start, end):
+    stock = yf.Ticker(stock)
 
     data = {}
 
@@ -25,11 +25,11 @@ def get_ivv(start, end):
     return(data)
 
 
-def get_underlying_stock_list(start, end):
+def get_underlying_stock_list(stock, start, end):
 
     stock_list = {}
 
-    raw_vals = get_ivv(start, end)
+    raw_vals = get_stock_data(stock, start, end)
 
     point_of_interest = list(raw_vals.items())
     #Each item is tuple: (date + time, price value)
@@ -48,15 +48,6 @@ def get_underlying_stock_list(start, end):
 
 
     return close_values, date_values, raw_vals    
-
-    
-
-
-def get_sma_list(start, end, lookback_period: int):
-
-    close_values, date_values, raw_vals = get_underlying_stock_list(start, end)
-
-    return sma_faster(close_values, lookback_period)
 
 
 

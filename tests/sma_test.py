@@ -1,7 +1,7 @@
 import math
 import random
 
-from sma import sma_naive, sma_faster
+from sma_algo import sma_naive, sma_faster
 
 
 # ---------------------------------------------------------------------------
