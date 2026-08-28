@@ -59,7 +59,5 @@ def get_sma_list(start, end, lookback_period: int):
     return sma_faster(close_values, lookback_period)
 
 
-# start_date = "2026-01-01"
-# end_date = "2026-08-03"
 
 # print(get_5d_sma_list(start_date, end_date))
