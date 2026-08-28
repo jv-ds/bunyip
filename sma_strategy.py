@@ -9,7 +9,7 @@ def get_sma_list(stock, start, end, lookback_period: int):
 
     return sma_faster(close_values, lookback_period)
 
-def compare_two_sma(stock, start,end, a: int, b: int):
+def compare_two_sma(stock, start, end, a: int, b: int):
 
     #setting variables for loop & terminal messages
     if a < b:
@@ -48,26 +48,26 @@ def compare_two_sma(stock, start,end, a: int, b: int):
             #on the last day we have to sell to see return
             if final_day:
                 if date_last_bought_idx > date_last_sold_idx:
-                    print(f"FINAL SELL at {curr_date}: Close value of underlying stock: {curr_underlying}")
+                    #print(f"FINAL SELL at {curr_date}: Close value of underlying stock: {curr_underlying}")
                     p2p_return = curr_underlying - close_values[date_last_bought_idx]
-                    print(f"The point to point return since the last buy is {p2p_return} point/s\n")
+                    #print(f"The point to point return since the last buy is {p2p_return} point/s\n")
                     trading_balance += p2p_return
 
             #buy
             elif buy_prereq:
-                    print(f"BUY at {curr_date}: The {b} day SMA has crossed ABOVE the {a} Day SMA \nClose value of underlying stock: {curr_underlying}\n")
+                    #print(f"BUY at {curr_date}: The {b} day SMA has crossed ABOVE the {a} Day SMA \nClose value of underlying stock: {curr_underlying}\n")
                     date_last_bought_idx = i
 
             #sell
             elif sell_prereq:
-                    print(f"SELL at {curr_date}: The {b} day SMA has crossed BELOW the {a} Day SMA \nClose value of underlying stock: {curr_underlying}")
+                    #print(f"SELL at {curr_date}: The {b} day SMA has crossed BELOW the {a} Day SMA \nClose value of underlying stock: {curr_underlying}")
                     p2p_return = curr_underlying - close_values[date_last_bought_idx]
                     trading_balance += p2p_return
-                    print(f"The point to point return since the last buy is {p2p_return} point/s\n")
+                    #print(f"The point to point return since the last buy is {p2p_return} point/s\n")
                     date_last_sold_idx = i
 
-
-    print(f"The indexed return is {indexed_balance} point/s and the trading return is {trading_balance} point/s")
+    #print(f"The indexed return is {indexed_balance} point/s and the trading return using {a} Day/{b} Day SMA is {trading_balance} point/s")
+    return indexed_balance, trading_balance
               
 
 # start_date = "2025-01-01"

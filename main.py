@@ -1,4 +1,5 @@
 from sma_strategy import compare_two_sma
+from sma_sweep import sma_sweep
 from datetime import datetime
 
 def gui():
@@ -7,13 +8,13 @@ def gui():
     strategy_choice(stock, start, end)
 
 def stock_choice():
-
     return str(input("Input the Yahoo Finance Ticker for the stock you wish to analyse: "))
 
 def strategy_choice(stock, start_date, end_date):
+
     strat_choice = int(input("Which strategy would you like to backtest?" \
               "\n\nSelect the strategy by typing in the number and pressing Enter\n"
-    "\n1. Simple Moving Average\n   \
+    "\n1. Simple Moving Average\n2. Simple Moving Average Sweep Analysis\
     \n"))
 
     if strat_choice == 1:
@@ -34,6 +35,9 @@ def strategy_choice(stock, start_date, end_date):
         print("\n")
 
         compare_two_sma(stock, start_date, end_date, a, b)
+
+    elif strat_choice == 2:
+        sma_sweep(stock, start_date, end_date)
 
 
 def date_request():
