@@ -1,10 +1,20 @@
-from yfin_livedata import get_underlying_stock_list, get_5d_sma_list, get_30d_sma_list
+from yfin_livedata import get_underlying_stock_list, get_sma_list
 
-# Strategy: buy when 5d sma crosses 30d sma upwards, sell when 5d sma crosses 30d downwards
+# Strategy: buy when smaller date parameter sma crosses larger sma upwards, sell when smaller date parameter sma crosses larger one downwards
 
-def thirty_vs_five(start,end):
-    thirty_d = get_30d_sma_list(start, end)
-    five_d = get_5d_sma_list(start, end)
+def compare_two_sma(start,end, a: int, b: int):
+
+    #setting variables for loop & terminal messages
+    if a < b:
+         temp = b
+         b = a
+         a = temp
+    if a == b:
+         raise ValueError
+
+    indicator_1 = get_sma_list(start, end, a)
+    indicator_2 = get_sma_list(start, end, b)
+    
     close_values, date, _ = get_underlying_stock_list(start, end)
 
     trading_balance = 0
@@ -13,19 +23,19 @@ def thirty_vs_five(start,end):
     date_last_bought_idx = 0
     date_last_sold_idx = 0
 
-    for i in range(len(five_d)):
+    for i in range(len(indicator_2)):
 
         if i == 0:               
             continue            # 'continue' prevents negative indexing as opposed to pass
 
-        if five_d[i] != None and five_d[i-1] != None and thirty_d[i] != None and thirty_d[i-1] != None:
+        if indicator_2[i] != None and indicator_2[i-1] != None and indicator_1[i] != None and indicator_1[i-1] != None:
 
             curr_date = date[i]
             curr_underlying = close_values[i]
 
             #Conditions for a buy/sell
-            sell_prereq = five_d[i-1] > thirty_d[i-1] and five_d[i] < thirty_d[i] and date_last_bought_idx > date_last_sold_idx   #5 day crosses below 30 day, date last bought is > date last sold
-            buy_prereq = five_d[i-1] < thirty_d[i-1] and five_d[i] > thirty_d[i] #5 day crosses above 30 day
+            sell_prereq = indicator_2[i-1] > indicator_1[i-1] and indicator_2[i] < indicator_1[i] and date_last_bought_idx > date_last_sold_idx   #smaller day crosses below larger day, date last bought is > date last sold
+            buy_prereq = indicator_2[i-1] < indicator_1[i-1] and indicator_2[i] > indicator_1[i] #smaller day crosses above larger day
             final_day = curr_date == date[-1]
 
             #on the last day we have to sell to see return
@@ -38,12 +48,12 @@ def thirty_vs_five(start,end):
 
             #buy
             elif buy_prereq:
-                    print(f"BUY at {curr_date}: The 5 day SMA has crossed ABOVE the 30 Day SMA \nClose value of underlying stock: {curr_underlying}\n")
+                    print(f"BUY at {curr_date}: The {b} day SMA has crossed ABOVE the {a} Day SMA \nClose value of underlying stock: {curr_underlying}\n")
                     date_last_bought_idx = i
 
             #sell
             elif sell_prereq:
-                    print(f"SELL at {curr_date}: The 5 day SMA has crossed BELOW the 30 Day SMA \nClose value of underlying stock: {curr_underlying}")
+                    print(f"SELL at {curr_date}: The {b} day SMA has crossed BELOW the {a} Day SMA \nClose value of underlying stock: {curr_underlying}")
                     p2p_return = curr_underlying - close_values[date_last_bought_idx]
                     trading_balance += p2p_return
                     print(f"The point to point return since the last buy is {p2p_return} point/s\n")
@@ -53,6 +63,6 @@ def thirty_vs_five(start,end):
     print(f"The indexed return is {indexed_balance} point/s and the trading return is {trading_balance} point/s")
               
 
-start_date = "2025-01-01"
-end_date = "2026-08-24"        
-thirty_vs_five(start_date, end_date)
+# start_date = "2025-01-01"
+# end_date = "2026-08-24"        
+# compare_two_sma(start_date, end_date, 5, 30)

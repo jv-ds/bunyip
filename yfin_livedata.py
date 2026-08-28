@@ -52,18 +52,11 @@ def get_underlying_stock_list(start, end):
     
 
 
-def get_5d_sma_list(start, end):
+def get_sma_list(start, end, lookback_period: int):
 
     close_values, date_values, raw_vals = get_underlying_stock_list(start, end)
 
-    return sma_faster(close_values,5)
-
-
-def get_30d_sma_list(start, end):
-
-    close_values, date_values, raw_vals = get_underlying_stock_list(start, end)
-
-    return sma_faster(close_values,30)
+    return sma_faster(close_values, lookback_period)
 
 
 # start_date = "2026-01-01"
