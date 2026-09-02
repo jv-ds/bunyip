@@ -1,7 +1,4 @@
 import yfinance as yf
-import json
-
-from sma_algo import sma_faster
 
 def get_stock_data(stock, start, end):
     stock = yf.Ticker(stock)

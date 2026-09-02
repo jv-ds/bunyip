@@ -1,5 +1,5 @@
-from sma_strategy import compare_two_sma
-from sma_sweep import sma_sweep
+from strategy import compare_two_sma
+from sweep import sma_sweep
 from datetime import datetime
 
 def gui():

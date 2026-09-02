@@ -1,4 +1,4 @@
-from yfin_livedata import get_underlying_stock_list, get_5d_sma_list, get_30d_sma_list
+from data_load import get_underlying_stock_list, get_5d_sma_list, get_30d_sma_list
 
 start_date = "2026-01-01"
 end_date = "2026-08-24"   

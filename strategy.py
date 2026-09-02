@@ -1,5 +1,5 @@
-from yfin_livedata import get_underlying_stock_list, get_stock_data
-from sma_algo import sma_faster
+from data_load import get_underlying_stock_list, get_stock_data
+from indicators_algos import sma_faster
 
 # Strategy: buy when smaller date parameter sma crosses larger sma upwards, sell when smaller date parameter sma crosses larger one downwards
 

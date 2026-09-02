@@ -1,4 +1,4 @@
-from sma_strategy import compare_two_sma
+from strategy import compare_two_sma
 import pandas as pd
 import seaborn as sns
 import matplotlib.pyplot as plt
